@@ -2,7 +2,6 @@ import React from 'react';
 
 class Profile extends React.Component {
   render() {
-    console.log(this.props.email, '<--- PROFILE DOT PROPS LOG ---<<<')
     return (
       <>
       <h1>Welcome back {this.props.username}!</h1>
