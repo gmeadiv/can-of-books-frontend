@@ -48,12 +48,18 @@ class BestBooks extends React.Component {
 
   handleCreate = async (bookInfo) => {
     await axios.post(process.env.REACT_APP_SERVER, bookInfo);
-    this.fetchBooks();
+    this.fetchBooks('', '');
   };
 
   handleUpdate = async (updatedInfo) => {
-    await axios.put(process.env.REACT_APP_SERVER + '/' + updatedInfo);
-    this.fetchBook();
+    console.log(updatedInfo, '<--- UPDATE LOG')
+    await axios.put(process.env.REACT_APP_SERVER + '/' + updatedInfo.id, updatedInfo);
+    this.fetchBooks('', '');
+  };
+
+  handleBurn = async (book) => {
+    await axios.delete(process.env.REACT_APP_SERVER + '/' + book.id);
+    this.fetchBooks('', '');
   };
 
   render() {
@@ -67,7 +73,7 @@ class BestBooks extends React.Component {
         <CreateBook onCreate={this.handleCreate}/>
 
         {this.state.books &&
-          <Books bookArray={this.state.books} handleUpdate={this.handleUpdate} />
+          <Books bookArray={this.state.books} handleUpdate={this.handleUpdate} handleBurn={this.handleBurn} />
         }
       {this.state.error && <h3>This Book Collection is Empty</h3>}
       </>
